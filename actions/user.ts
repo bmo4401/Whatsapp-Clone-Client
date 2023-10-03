@@ -18,7 +18,7 @@ export const checkUser = async (email: string) => {
       {
         withCredentials: true,
         headers: {
-          'Access-Control-Allow-Origin': 'http://localhost:3000',
+          'Access-Control-Allow-Origin': process.env.NEXT_URL,
           'Access-Control-Allow-Credentials': 'true',
         },
       },
