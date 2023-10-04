@@ -82,7 +82,7 @@ const Container: React.FC<ContainerProps> = ({ data, socket }) => {
                     //@ts-ignore
                     vd.playsInline = true;
                     vd.muted = false;
-                    vd.className = 'max-w-1/2';
+                    vd.className = 'max-w-md';
                     if (rmVideo) {
                       rmVideo.appendChild(vd);
                     }
@@ -140,7 +140,7 @@ const Container: React.FC<ContainerProps> = ({ data, socket }) => {
 
                 videoElement.id = 'video-local-zego';
                 videoElement.className =
-                  'aspect-[1.5/1] px-2 rounded-md max-w-1/2';
+                  'aspect-[1.5/1] px-2 rounded-md max-w-md';
                 videoElement.autoplay = true;
                 videoElement.muted = false;
                 //@ts-ignore
@@ -190,7 +190,7 @@ const Container: React.FC<ContainerProps> = ({ data, socket }) => {
   return (
     <div className="border-conversation-border border-l w-full bg-conversation-panel-background flex flex-col h-[100vh] overflow-hidden items-center justify-center text-white">
       <div className=" flex flex-col gap-3 items-center">
-        <span className="text-5xl">{user?.name}</span>
+        <span className="text-5xl ">{user?.name}</span>
         <span className="text-lg">
           {callAccepted && data.callType !== 'video'
             ? 'On going call'
