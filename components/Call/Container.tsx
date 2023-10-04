@@ -64,9 +64,8 @@ const Container: React.FC<ContainerProps> = ({ data, socket }) => {
                 process.env.NEXT_PUBLIC_ZEGO_SECRET!,
               );
               zg.setLogConfig({
-                remoteLogLevel: 'disable',
-                logLevel: 'disable',
-                logURL: '',
+                remoteLogLevel: 'error',
+                logLevel: 'error',
               });
               setZgVar(zg);
               /* on zegocloud */
@@ -208,7 +207,7 @@ const Container: React.FC<ContainerProps> = ({ data, socket }) => {
         </div>
       )}
       <div
-        className="w-full max-h-[500px] my-5 relative flex "
+        className="w-full max-h-[500px] my-5 relative flex justify-center"
         id="remote-video"
       ></div>
       <div
