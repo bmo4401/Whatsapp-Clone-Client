@@ -6,6 +6,7 @@ import {
 } from '@/utils/ApiRoutes';
 import axios from 'axios';
 import { StaticImageData } from 'next/image';
+
 export const checkUser = async (email: string) => {
   try {
     const {
@@ -23,7 +24,6 @@ export const checkUser = async (email: string) => {
         },
       },
     );
-    console.log('❄️ ~ file: user.ts:12 ~ data:', data);
     return data;
   } catch (err: any) {
     console.log(err);
@@ -38,7 +38,9 @@ export const refresh = async () => {
     } = await axios.get<FormatReceive<undefined>>(
       REFRESH_USER_ROUTE,
 
-      { withCredentials: true },
+      {
+        withCredentials: true,
+      },
     );
     return data;
   } catch (err: any) {
