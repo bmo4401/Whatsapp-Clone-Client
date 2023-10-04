@@ -32,7 +32,6 @@ function OnBoarding() {
       try {
         const profileImage = image;
         const data = await register(email, name, profileImage, about);
-        console.log('❄️ ~ file: page.tsx:35 ~ data:', data);
 
         if (data.status) {
           dispatch(

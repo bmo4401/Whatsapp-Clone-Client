@@ -20,115 +20,115 @@ import { useDispatch, useSelector } from 'react-redux';
 import Empty from './Empty';
 
 const SearchMessages = dynamic(
-   () => import('@/components/Chat/SearchMessages'),
-   {
-      ssr: false,
-   },
+  () => import('@/components/Chat/SearchMessages'),
+  {
+    ssr: false,
+  },
 );
 const VideoCall = dynamic(() => import('@/components/Call/VideoCall'), {
-   ssr: false,
+  ssr: false,
 });
 const VoiceCall = dynamic(() => import('@/components/Call/VoiceCall'), {
-   ssr: false,
+  ssr: false,
 });
 
 const Main = () => {
-   const { id, email, messageSearch } = useSelector(userSelector);
+  const { id, email, messageSearch } = useSelector(userSelector);
 
-   const { incomingVideoCall, incomingVoiceCall, videoCall, voiceCall } =
-      useSelector(callSelector);
+  const { incomingVideoCall, incomingVoiceCall, videoCall, voiceCall } =
+    useSelector(callSelector);
 
-   const { currentChatUser } = useSelector(contactSelector);
-   const dispatch = useDispatch();
-   const router = useRouter();
-   const socket = Socket();
+  const { currentChatUser } = useSelector(contactSelector);
+  const dispatch = useDispatch();
+  const router = useRouter();
+  const socket = Socket();
 
-   /* Auth */
-   useEffect(() => {
-      if (!email || !id) router.push('/login');
-      if (email && id)
-         (async () => {
-            const res = await refresh();
+  /* Auth */
+  useEffect(() => {
+    if (!email || !id) router.push('/login');
+    if (email && id)
+      (async () => {
+        const res = await refresh();
 
-            if (!res?.status) {
-               alert('Session expired, please log in again.');
-               router.push('/logout');
-            }
-         })();
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-   }, [email, id, router]);
+        if (!res?.status) {
+          alert('Session expired, please log in again.');
+          router.push('/logout');
+        }
+      })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [email, id, router]);
 
-   useEffect(() => {
-      if (!email && !id)
-         onAuthStateChanged(firebaseAuth, async (currentUser) => {
-            if (email) {
-               const data = await checkUser(email);
-               const { user } = data.data;
-               if (!data.status) router.push('/login');
-               dispatch(
-                  setUser({
-                     id: user.id,
-                     email: user.email,
-                     name: user.name,
-                     profileImage: user.profileImage,
-                     status: user?.about,
-                     isNew: false,
-                  }),
-               );
-               router.push('/');
-            }
-         });
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-   }, []);
+  useEffect(() => {
+    if (!email && !id)
+      onAuthStateChanged(firebaseAuth, async (currentUser) => {
+        if (email) {
+          const data = await checkUser(email);
+          const { user } = data.data;
+          if (!data.status) router.push('/login');
+          dispatch(
+            setUser({
+              id: user.id,
+              email: user.email,
+              name: user.name,
+              profileImage: user.profileImage,
+              status: user?.about,
+              isNew: false,
+            }),
+          );
+          router.push('/');
+        }
+      });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-   /* Get Message */
-   useEffect(() => {
-      if (currentChatUser?.id) {
-         try {
-            (async () => {
-               const { data } = await getMessages(+id, +currentChatUser.id);
-               dispatch(setMessages(data));
-            })();
-         } catch (error) {
-            console.log('🍀 ~ file: Main.tsx:55 ~ error:', error);
-         }
+  /* Get Message */
+  useEffect(() => {
+    if (currentChatUser?.id) {
+      try {
+        (async () => {
+          const { data } = await getMessages(+id, +currentChatUser.id);
+          dispatch(setMessages(data));
+        })();
+      } catch (error) {
+        console.log('🍀 ~ file: Main.tsx:55 ~ error:', error);
       }
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-   }, [id, currentChatUser]);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id, currentChatUser]);
 
-   return (
-      <>
-         {incomingVideoCall && <IncomingVideoCall socket={socket!} />}
-         {incomingVoiceCall && <IncomingVoiceCall socket={socket!} />}
-         {!videoCall && !voiceCall ? (
-            <div className="grid grid-cols-main h-screen w-screen max-h-screen max-w-full">
-               <SidebarContent />
-               {currentChatUser ? (
-                  <div className={cn(messageSearch ? 'grid grid-cols-2' : '')}>
-                     {' '}
-                     <Chat socket={socket} />
-                     {messageSearch && <SearchMessages />}
-                  </div>
-               ) : (
-                  <Empty />
-               )}
+  return (
+    <>
+      {incomingVideoCall && <IncomingVideoCall socket={socket!} />}
+      {incomingVoiceCall && <IncomingVoiceCall socket={socket!} />}
+      {!videoCall && !voiceCall ? (
+        <div className="grid grid-cols-main h-screen w-screen max-h-screen max-w-full">
+          <SidebarContent />
+          {currentChatUser ? (
+            <div className={cn(messageSearch ? 'grid grid-cols-2' : '')}>
+              {' '}
+              <Chat socket={socket} />
+              {messageSearch && <SearchMessages />}
             </div>
-         ) : (
-            <>
-               {videoCall && (
-                  <div className="h-screen w-screen max-h-full overflow-hidden">
-                     <VideoCall socket={socket!} />
-                  </div>
-               )}
-               {voiceCall && (
-                  <div className="h-screen w-screen max-h-full overflow-hidden">
-                     <VoiceCall socket={socket!} />
-                  </div>
-               )}
-            </>
-         )}
-      </>
-   );
+          ) : (
+            <Empty />
+          )}
+        </div>
+      ) : (
+        <>
+          {videoCall && (
+            <div className="h-screen w-screen max-h-full overflow-hidden">
+              <VideoCall socket={socket!} />
+            </div>
+          )}
+          {voiceCall && (
+            <div className="h-screen w-screen max-h-full overflow-hidden">
+              <VoiceCall socket={socket!} />
+            </div>
+          )}
+        </>
+      )}
+    </>
+  );
 };
 
 export default Main;

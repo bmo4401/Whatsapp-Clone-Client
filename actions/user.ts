@@ -18,7 +18,7 @@ export const checkUser = async (email: string) => {
       {
         withCredentials: true,
         headers: {
-          'Access-Control-Allow-Origin': process.env.NEXT_URL,
+          'Access-Control-Allow-Origin': process.env.NEXT_PUBLIC_URL,
           'Access-Control-Allow-Credentials': 'true',
         },
       },
@@ -42,6 +42,7 @@ export const refresh = async () => {
     );
     return data;
   } catch (err: any) {
+    console.log('❄️ ~ file: user.ts:45 ~ err:', err);
     return err?.response?.data;
   }
 };

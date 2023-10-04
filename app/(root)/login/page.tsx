@@ -21,13 +21,9 @@ function Login() {
     const provider = new GoogleAuthProvider();
     const { user } = await signInWithPopup(firebaseAuth, provider);
     const { email, displayName: name, photoURL: profileImage } = user;
-    console.log('❄️ ~ file: page.tsx:24 ~ profileImage:', profileImage);
-    console.log('❄️ ~ file: page.tsx:24 ~ name:', name);
-    console.log('❄️ ~ file: page.tsx:24 ~ email:', email);
     try {
       if (email && name && profileImage) {
         const data = await checkUser(email);
-        console.log('❄️ ~ file: page.tsx:30 ~ data:', data);
 
         if (!data.status) {
           dispatch(
