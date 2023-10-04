@@ -121,6 +121,7 @@ const Container: React.FC<ContainerProps> = ({ data, socket }) => {
                 { userID: id?.toString()!, userName: name },
                 { userUpdate: true },
               ).then(async (result) => {
+                console.log('❄️ ~ file: Container.tsx:124 ~ result:', result);
                 const localStream = await zg.createStream({
                   camera: {
                     audio: true,
@@ -131,7 +132,6 @@ const Container: React.FC<ContainerProps> = ({ data, socket }) => {
                   '❄️ ~ file: Container.tsx:132 ~ localStream:',
                   localStream,
                 );
-                const localView = zg.createLocalStreamView(localStream);
                 const localVideo = document.getElementById('remote-video');
 
                 const videoElement = document.createElement(
@@ -153,7 +153,6 @@ const Container: React.FC<ContainerProps> = ({ data, socket }) => {
                   | HTMLAudioElement;
                 td.srcObject = localStream;
                 td.play();
-                localView.play('video-local-zego');
                 const streamID = Date.now().toString();
                 setPublishStream(streamID);
                 setLocalStream(localStream);
