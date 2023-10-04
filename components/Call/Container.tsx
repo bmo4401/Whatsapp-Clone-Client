@@ -86,6 +86,7 @@ const Container: React.FC<ContainerProps> = ({ data, socket }) => {
                     //@ts-ignore
                     vd.playsInline = true;
                     vd.muted = false;
+                    vd.className = 'max-w-1/2';
                     if (rmVideo) {
                       rmVideo.appendChild(vd);
                     }
@@ -140,7 +141,8 @@ const Container: React.FC<ContainerProps> = ({ data, socket }) => {
                 );
 
                 videoElement.id = 'video-local-zego';
-                videoElement.className = 'aspect-[1.5/1] px-2 rounded-md';
+                videoElement.className =
+                  'aspect-[1.5/1] px-2 rounded-md max-w-1/2';
                 videoElement.autoplay = true;
                 videoElement.muted = false;
                 //@ts-ignore
