@@ -72,10 +72,6 @@ const Container: React.FC<ContainerProps> = ({ data, socket }) => {
               zg.on(
                 'roomStreamUpdate',
                 async (roomID, updateType, streamList, extendedData) => {
-                  console.log(
-                    '❄️ ~ file: Container.tsx:76 ~ updateType:',
-                    updateType,
-                  );
                   if (updateType === 'ADD') {
                     const rmVideo = document.getElementById('remote-video');
                     const vd = document.createElement(
@@ -96,7 +92,6 @@ const Container: React.FC<ContainerProps> = ({ data, socket }) => {
                         video: true,
                       })
                       .then((stream) => {
-                        console.log(stream);
                         vd.srcObject = stream;
                         vd.play();
                       })
@@ -134,6 +129,10 @@ const Container: React.FC<ContainerProps> = ({ data, socket }) => {
                     video: data.callType === 'video' ? true : false,
                   },
                 });
+                console.log(
+                  '❄️ ~ file: Container.tsx:132 ~ localStream:',
+                  localStream,
+                );
                 const localView = zg.createLocalStreamView(localStream);
                 const localVideo = document.getElementById('remote-video');
 
