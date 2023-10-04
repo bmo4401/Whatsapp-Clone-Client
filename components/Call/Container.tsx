@@ -159,11 +159,13 @@ const Container: React.FC<ContainerProps> = ({ data, socket }) => {
       zgVar.stopPublishingStream(publishStream);
       zgVar.logoutRoom(data.roomId.toString());
     }
+    console.log(data.callType);
     if (data.callType === 'audio') {
       socket.emit(SOCKET['REJECT-VOICE-CALL'], {
         from: voiceCall?.user?.id,
       });
     } else {
+      console.log('end');
       socket.emit(SOCKET['REJECT-VIDEO-CALL'], {
         from: videoCall?.user?.id,
       });
