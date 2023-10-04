@@ -121,8 +121,6 @@ const Container: React.FC<ContainerProps> = ({ data, socket }) => {
                 { userID: id?.toString()!, userName: name },
                 { userUpdate: true },
               ).then(async (result) => {
-                console.log(result);
-                console.log(data.callType);
                 const localStream = await zg.createStream({
                   camera: {
                     audio: true,
