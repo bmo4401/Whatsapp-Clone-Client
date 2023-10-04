@@ -155,6 +155,7 @@ const Container: React.FC<ContainerProps> = ({ data, socket }) => {
                   | HTMLVideoElement
                   | HTMLAudioElement;
                 td.srcObject = localStream;
+                td.play();
                 localView.play('video-local-zego');
                 const streamID = Date.now().toString();
                 setPublishStream(streamID);
