@@ -128,12 +128,13 @@ const Container: React.FC<ContainerProps> = ({ data, socket }) => {
               ).then(async (result) => {
                 console.log(result);
                 console.log(data.callType);
-                const localStreaming = await zg.createStream({
+                const localStream = await zg.createStream({
                   camera: {
                     audio: true,
                     video: data.callType === 'video' ? true : false,
                   },
                 });
+                const localView = zg.createLocalStreamView(localStream);
                 const localVideo = document.getElementById('remote-video');
 
                 const videoElement = document.createElement(
@@ -153,12 +154,12 @@ const Container: React.FC<ContainerProps> = ({ data, socket }) => {
                 const td = document.getElementById('video-local-zego') as
                   | HTMLVideoElement
                   | HTMLAudioElement;
-                td.srcObject = localStreaming;
-                td.play();
+                td.srcObject = localStream;
+                localView.play('video-local-zego');
                 const streamID = Date.now().toString();
                 setPublishStream(streamID);
-                setLocalStream(localStreaming);
-                zg.startPublishingStream(streamID, localStreaming);
+                setLocalStream(localStream);
+                zg.startPublishingStream(streamID, localStream);
               });
             },
           );
