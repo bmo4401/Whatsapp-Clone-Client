@@ -192,7 +192,7 @@ const Container: React.FC<ContainerProps> = ({ data, socket }) => {
         </div>
       )}
       <div
-        className="w-full max-h-[500px] my-5 relative flex justify-center "
+        className="w-full max-h-[500px] my-5 relative flex "
         id="remote-video"
       ></div>
       <div
