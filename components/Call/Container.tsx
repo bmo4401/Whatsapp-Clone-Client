@@ -145,12 +145,13 @@ const Container: React.FC<ContainerProps> = ({ data, socket }) => {
                 videoElement.muted = false;
                 //@ts-ignore
                 videoElement.playsInline = true;
-
-                localVideo!.appendChild(videoElement);
-                /*                 const td = document.getElementById('video-local-zego') as
+                if (localVideo) {
+                  localVideo.appendChild(videoElement);
+                }
+                const td = document.getElementById('video-local-zego') as
                   | HTMLVideoElement
-                  | HTMLAudioElement; */
-                videoElement.srcObject = localStreaming;
+                  | HTMLAudioElement;
+                td.srcObject = localStreaming;
                 const streamID = Date.now().toString();
                 setPublishStream(streamID);
                 setLocalStream(localStreaming);
