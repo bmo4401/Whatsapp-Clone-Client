@@ -132,8 +132,9 @@ const Container: React.FC<ContainerProps> = ({ data, socket }) => {
                 videoElement.muted = false;
                 //@ts-ignore
                 videoElement.playsInline = true;
-                localVideo!.appendChild(videoElement);
 
+                !localVideo?.querySelector('#video-local-zego') &&
+                  localVideo!.appendChild(videoElement);
                 const td = document.getElementById('video-local-zego') as
                   | HTMLVideoElement
                   | HTMLAudioElement;
