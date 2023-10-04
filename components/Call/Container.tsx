@@ -119,46 +119,44 @@ const Container: React.FC<ContainerProps> = ({ data, socket }) => {
                 },
               );
 
-              {
-                /* login */
-                await zg.loginRoom(
-                  data.roomId.toString(),
-                  token,
-                  { userID: id?.toString()!, userName: name },
-                  { userUpdate: true },
-                );
+              /* login */
+              await zg.loginRoom(
+                data.roomId.toString(),
+                token,
+                { userID: id?.toString()!, userName: name },
+                { userUpdate: true },
+              );
 
-                const localStreaming = await zg.createStream({
-                  camera: {
-                    audio: true,
-                    video: data.callType === 'video' ? true : false,
-                  },
-                });
-                const localVideo = document.getElementById('remote-video');
+              const localStreaming = await zg.createStream({
+                camera: {
+                  audio: true,
+                  video: data.callType === 'video' ? true : false,
+                },
+              });
+              const localVideo = document.getElementById('remote-video');
 
-                const videoElement = document.createElement(
-                  data.callType === 'video' ? 'video' : 'audio',
-                );
+              const videoElement = document.createElement(
+                data.callType === 'video' ? 'video' : 'audio',
+              );
 
-                videoElement.id = 'video-local-zego';
-                videoElement.className =
-                  'aspect-[1.5/1] px-2 rounded-md max-w-1/2';
-                videoElement.autoplay = true;
-                videoElement.muted = false;
-                //@ts-ignore
-                videoElement.playsInline = true;
-                if (localVideo) {
-                  localVideo.appendChild(videoElement);
-                }
-                const td = document.getElementById('video-local-zego') as
-                  | HTMLVideoElement
-                  | HTMLAudioElement;
-                td.srcObject = localStreaming;
-                const streamID = Date.now().toString();
-                setPublishStream(streamID);
-                setLocalStream(localStreaming);
-                zg.startPublishingStream(streamID, localStreaming);
+              videoElement.id = 'video-local-zego';
+              videoElement.className =
+                'aspect-[1.5/1] px-2 rounded-md max-w-1/2';
+              videoElement.autoplay = true;
+              videoElement.muted = false;
+              //@ts-ignore
+              videoElement.playsInline = true;
+              if (localVideo) {
+                localVideo.appendChild(videoElement);
               }
+              const td = document.getElementById('video-local-zego') as
+                | HTMLVideoElement
+                | HTMLAudioElement;
+              td.srcObject = localStreaming;
+              const streamID = Date.now().toString();
+              setPublishStream(streamID);
+              setLocalStream(localStreaming);
+              zg.startPublishingStream(streamID, localStreaming);
             },
           );
         };
